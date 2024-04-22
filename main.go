@@ -22,11 +22,10 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/skupperproject/skupper/pkg/qdr"
 
 	"github.com/skupperproject/skupper/api/types"
 	"github.com/skupperproject/skupper/pkg/certs"
-	"github.com/skupperproject/skupper/pkg/version"
+	"github.com/skupperproject/skupper/pkg/qdr"
 )
 
 type authKeyType string
@@ -173,8 +172,6 @@ func internalLogout(w http.ResponseWriter, r *http.Request, validNonces map[stri
 func main() {
 	var cfg Config
 	flags := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-	// if -version used, report and exit
-	isVersion := flags.Bool("version", false, "Report the version of the Skupper Flow Collector")
 
 	flags.StringVar(&cfg.FlowConnectionFile, "flow-connection-file", "/etc/messaging/connect.json", "Path to the file detailing connection info for the skupper router")
 
@@ -196,13 +193,9 @@ func main() {
 	flags.BoolVar(&cfg.EnableProfile, "profile", false, "Exposes the runtime profiling facilities from net/http/pprof on http://localhost:9970")
 
 	flags.Parse(os.Args[1:])
-	if *isVersion {
-		fmt.Println(version.Version)
-		os.Exit(0)
-	}
 
 	// Startup message
-	log.Printf("COLLECTOR: Starting Skupper Flow collector controller version %s \n", version.Version)
+	log.Println("COLLECTOR: Starting Skupper Flow collector controller")
 
 	// set up signals so we handle the first shutdown signal gracefully
 	stopCh := SetupSignalHandler()
