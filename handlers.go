@@ -5,13 +5,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-
-	"github.com/skupperproject/skupper/pkg/flow"
 )
 
 func (c *RestController) eventsourceHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.EventSource, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: EventSource, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -21,7 +19,7 @@ func (c *RestController) eventsourceHandler(w http.ResponseWriter, r *http.Reque
 
 func (c *RestController) siteHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Site, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Site, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -31,7 +29,7 @@ func (c *RestController) siteHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *RestController) hostHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Host, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Host, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -41,7 +39,7 @@ func (c *RestController) hostHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *RestController) routerHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Router, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Router, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -51,7 +49,7 @@ func (c *RestController) routerHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *RestController) linkHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Link, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Link, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -61,7 +59,7 @@ func (c *RestController) linkHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *RestController) listenerHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Listener, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Listener, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -71,7 +69,7 @@ func (c *RestController) listenerHandler(w http.ResponseWriter, r *http.Request)
 
 func (c *RestController) connectorHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Connector, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Connector, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -81,7 +79,7 @@ func (c *RestController) connectorHandler(w http.ResponseWriter, r *http.Request
 
 func (c *RestController) addressHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Address, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Address, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -91,7 +89,7 @@ func (c *RestController) addressHandler(w http.ResponseWriter, r *http.Request) 
 
 func (c *RestController) processHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Process, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Process, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -101,7 +99,7 @@ func (c *RestController) processHandler(w http.ResponseWriter, r *http.Request) 
 
 func (c *RestController) processGroupHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.ProcessGroup, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: ProcessGroup, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -111,7 +109,7 @@ func (c *RestController) processGroupHandler(w http.ResponseWriter, r *http.Requ
 
 func (c *RestController) flowHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Flow, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Flow, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -121,7 +119,7 @@ func (c *RestController) flowHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *RestController) flowPairHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.FlowPair, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: FlowPair, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -131,7 +129,7 @@ func (c *RestController) flowPairHandler(w http.ResponseWriter, r *http.Request)
 
 func (c *RestController) sitePairHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.SitePair, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: SitePair, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -141,7 +139,7 @@ func (c *RestController) sitePairHandler(w http.ResponseWriter, r *http.Request)
 
 func (c *RestController) processGroupPairHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.ProcessGroupPair, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: ProcessGroupPair, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -151,7 +149,7 @@ func (c *RestController) processGroupPairHandler(w http.ResponseWriter, r *http.
 
 func (c *RestController) processPairHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.ProcessPair, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: ProcessPair, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {
@@ -161,7 +159,7 @@ func (c *RestController) processPairHandler(w http.ResponseWriter, r *http.Reque
 
 func (c *RestController) collectorHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	c.FlowCollector.Request <- flow.ApiRequest{RecordType: flow.Collector, Request: r}
+	c.FlowCollector.Request <- ApiRequest{RecordType: Collector, Request: r}
 	response := <-c.FlowCollector.Response
 	w.WriteHeader(response.Status)
 	if response.Body != nil {

@@ -7,19 +7,18 @@ import (
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/skupperproject/skupper/pkg/flow"
 	"github.com/skupperproject/skupper/pkg/qdr"
 )
 
 type RestController struct {
-	FlowCollector *flow.FlowCollector
+	FlowCollector *FlowCollector
 }
 
 func NewController(origin string, reg prometheus.Registerer, scheme string, host string, port string, tlsConfig qdr.TlsConfigRetriever, recordTtl time.Duration) (*RestController, error) {
 
 	controller := &RestController{
-		FlowCollector: flow.NewFlowCollector(flow.FlowCollectorSpec{
-			Mode:              flow.RecordMetrics,
+		FlowCollector: NewFlowCollector(FlowCollectorSpec{
+			Mode:              RecordMetrics,
 			Origin:            origin,
 			PromReg:           reg,
 			ConnectionFactory: qdr.NewConnectionFactory(scheme+"://"+host+":"+port, tlsConfig),
