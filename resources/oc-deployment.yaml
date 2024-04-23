@@ -47,7 +47,7 @@ spec:
       serviceAccountName: network-console
       containers:
       - name: network-console
-        image: quay.io/ckruse/skupper/flow-collector:distinct-flow-collector-deployment
+        image: quay.io/ckruse/skupper/collector:latest
         args:
           - -listen=127.0.0.1:8080
           - -listen-metrics=:9090

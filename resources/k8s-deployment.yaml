@@ -38,7 +38,7 @@ spec:
         app: network-console
     spec:
       containers:
-      - image: quay.io/ckruse/skupper/flow-collector:distinct-flow-collector-deployment
+      - image: quay.io/ckruse/skupper/collector:latest
         args:
           - -listen=:8443
           - -tls-cert=/etc/console/tls.crt

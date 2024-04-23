@@ -11,13 +11,13 @@ import (
 	"github.com/skupperproject/skupper/pkg/qdr"
 )
 
-type Controller struct {
+type RestController struct {
 	FlowCollector *flow.FlowCollector
 }
 
-func NewController(origin string, reg prometheus.Registerer, scheme string, host string, port string, tlsConfig qdr.TlsConfigRetriever, recordTtl time.Duration) (*Controller, error) {
+func NewController(origin string, reg prometheus.Registerer, scheme string, host string, port string, tlsConfig qdr.TlsConfigRetriever, recordTtl time.Duration) (*RestController, error) {
 
-	controller := &Controller{
+	controller := &RestController{
 		FlowCollector: flow.NewFlowCollector(flow.FlowCollectorSpec{
 			Mode:              flow.RecordMetrics,
 			Origin:            origin,
@@ -30,7 +30,7 @@ func NewController(origin string, reg prometheus.Registerer, scheme string, host
 	return controller, nil
 }
 
-func (c *Controller) Run(stopCh <-chan struct{}) error {
+func (c *RestController) Run(stopCh <-chan struct{}) error {
 	defer utilruntime.HandleCrash()
 
 	log.Println("COLLECTOR: Starting the Skupper flow collector")

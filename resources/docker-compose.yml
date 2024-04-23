@@ -9,7 +9,7 @@ volumes:
 
 services:
   network-console:
-    image: quay.io/ckruse/skupper/flow-collector:distinct-flow-collector-deployment
+    image: quay.io/ckruse/skupper/collector:latest
     network: skupper
     command:
       - -enable-console
