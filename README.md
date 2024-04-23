@@ -1,6 +1,8 @@
 # collector
 
-The Skupper Collector is responsible for collecting flow information from a
-skupper network. This flow data informs both the topology of the network and
-the traffic patterns of the applications it serves. With this data, the
-collector exposes a REST API as well as traffic metrics.
+The Skupper Collector works as an add-on to a skupper site. Using Skupper's data
+plane, the collector is able to infer the topology of the network and observe
+traffic patterns within the network.
+
+The collector exposes an API and metrics containing this information, and optionally embeds the
+[skupper console](https://github.com/skupperproject/skupper-console) web UI.
